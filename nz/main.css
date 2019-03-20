@@ -37,3 +37,36 @@ header h4 {
 address a {
     color: grey;
 }
+
+main {
+    width: 70%;
+    margin: auto;
+}
+
+main figure {
+    margin-left: 0;
+}
+
+main figcaption {
+    float: left;
+    margin-left: -12em;
+    width: 11.5em;
+}
+
+main figure img {
+    width: 90%;
+}
+
+#map {
+    height: 360px;
+    width: 90%;
+    border: 1px solid black;
+}
+
+.back {
+    float: left;    
+}
+
+.next {
+    float: right;
+}
