@@ -1,12 +1,19 @@
 // Skript für Neuseelandreise;
 
 const div = document.getElementById("map");
-const lat = div.getAttribute("data-lat");
-const lng = div.getAttribute("data-lng");
-const title = div.getAttribute("data-title");
+const breite = div.getAttribute("data-lat");
+const laenge = div.getAttribute("data-lng");
+const titel = div.getAttribute("data-title");
 
-// console.log(lat,lng,title);
+// console.log(breite,laenge,titel);
 
-// alert(lat);
-// alert(lng);
-// alert(title);
+// alert(breite);
+// alert(laenge);
+// alert(titel);
+
+
+
+// Karte initialisieren
+
+let karte = L.map("map");
+//console.log(karte);
