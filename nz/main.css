@@ -52,6 +52,7 @@ main figcaption {
     float: left;
     margin-left: -12em;
     width: 11.5em;
+    color: grey;
 }
 
 main figure img {
@@ -70,4 +71,12 @@ main figure img {
 
 .next {
     float: right;
+}
+
+footer {
+    padding: 1em 0 3em 0;
+}
+
+footer a {
+    color: grey;
 }
