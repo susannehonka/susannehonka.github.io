@@ -80,3 +80,11 @@ footer {
 footer a {
     color: grey;
 }
+
+@media only screen and (max-width: 1280px) {
+    main figure figcaption {
+        float: none;
+        margin-left: 0;
+        width: auto;
+    }
+}
