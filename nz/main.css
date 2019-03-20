@@ -5,6 +5,12 @@ body {
 header {
     text-align: center;
 }
-h2 {
+header h2 {
     font-size: 4em;
+}
+header h3 {
+    font-size: 2em;
+}
+header h4 {
+    font-size: 0.75em;
 }
