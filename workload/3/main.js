@@ -1,5 +1,5 @@
-let changeMe = true;
+const entree = 'Enchiladas';
 
-changeMe = false;
+console.log(entree);
 
-console.log(changeMe);
+const testing;
