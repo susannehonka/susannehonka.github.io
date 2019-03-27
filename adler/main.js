@@ -60,5 +60,27 @@ let pin3 = L.marker(
 ).addTo(karte);
 pin3.bindPopup(
     `<h1>Standort ${blick1.standort}</h1>
-    <p>Höhe: ${blick1.seehoehe}</p>`
+    <p>Höhe: ${blick1.seehoehe}</p>
+    <em>Kunde: ${blick1.kunde}</em>`
     );
+
+
+    const blick2 = { 
+        kunde: "Bergbahn Scheffau", 
+        standort: "Brandstadl",
+        seehoehe: 1640,
+        lat: 47.4912,
+        lng: 12.248,
+    };
+
+
+let pin4 = L.marker(
+        [blick2.lat, blick2.lng]
+    ).addTo(karte);
+pin4.bindPopup(
+        `<h1>Standort ${blick2.standort}</h1>
+        <p>Höhe: ${blick2.seehoehe}</p>
+        <em>Kunde: ${blick2.kunde}</em>`
+        );
+
+        
