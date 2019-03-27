@@ -54,7 +54,11 @@ const blick1 = {
     lng: 12.31861,
 };
 
-//Marker wo Tabelle im objekt platziert wird
+//Marker wo Tabelle im objekt platziert wird + Popup
 let pin3 = L.marker(
     [blick1.lat, blick1.lng]
-).addTo(karte)
+).addTo(karte);
+pin3.bindPopup(
+    `<h1>Standort ${blick1.standort}</h1>
+    <p>Höhe: ${blick1.seehoehe}</p>`
+    );
