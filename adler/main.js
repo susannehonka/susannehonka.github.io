@@ -46,13 +46,6 @@ pin2.bindPopup(titel2).openPopup();
 
 
 //Exceltabelle übernehmen
-const blick1 = {
-    kunde: "Wilder Kaiser",
-    standort: "Gruttenhütte",
-    seehoehe: 1640,
-    lat: 47.55564,
-    lng: 12.31861,
-};
 
 //Marker wo Tabelle im objekt platziert wird + Popup
 //let pin3 = L.marker(
@@ -64,29 +57,31 @@ const blick1 = {
 //    <em>Kunde: ${blick1.kunde}</em>`
 //);
 
-
-const blick2 = {
-    kunde: "Bergbahn Scheffau",
-    standort: "Brandstadl",
-    seehoehe: 1640,
-    lat: 47.4912,
-    lng: 12.248,
-};
-
-const blick3 = {
-    kunde: "Lechtal Tourismus",
-    standort: "Sonnalm Jöchelspitze",
-    seehoehe: 1786,
-    lat: 47.27528,
-    lng: 10.36505,
-};
-
 const adlerblicke = [
-    blick1,
-    blick2,
-    blick3
+    {
+        kunde: "Wilder Kaiser",
+        standort: "Gruttenhütte",
+        seehoehe: 1640,
+        lat: 47.55564,
+        lng: 12.31861,
+    },
+    {
+        kunde: "Bergbahn Scheffau",
+        standort: "Brandstadl",
+        seehoehe: 1640,
+        lat: 47.4912,
+        lng: 12.248,
+    },
+    {
+        kunde: "Lechtal Tourismus",
+        standort: "Sonnalm Jöchelspitze",
+        seehoehe: 1786,
+        lat: 47.27528,
+        lng: 10.36505,
+    }
 ];
 for (let blick of adlerblicke) {
+    console.log(blick);
     let blickpin = L.marker(
         [blick.lat, blick.lng]
     ).addTo(karte);
@@ -96,3 +91,4 @@ for (let blick of adlerblicke) {
         <em>Kunde: ${blick.kunde}</em>`
     )
 }
+
