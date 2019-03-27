@@ -7,7 +7,7 @@ body {
 header {
     text-align: center;
     background-image: url("images/header.jpg");
-    background-position: 0 100%;
+    background-position: 0 25%;
 }
 
 header h2 {
