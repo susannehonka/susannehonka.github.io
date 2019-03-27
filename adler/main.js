@@ -32,12 +32,12 @@ L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(karte);
 
 // Positionsmarker 1 hinzufügen
 let pin1 = L.marker(
-    [breite1,laenge1]
+    [breite1, laenge1]
 ).addTo(karte);
 
 // Positionsmarker 2 hinzufügen
 let pin2 = L.marker(
-    [breite2,laenge2]
+    [breite2, laenge2]
 ).addTo(karte);
 
 // Popup zum pin 1 und 2 hängen
@@ -46,8 +46,8 @@ pin2.bindPopup(titel2).openPopup();
 
 
 //Exceltabelle übernehmen
-const blick1 = { 
-    kunde: "Wilder Kaiser", 
+const blick1 = {
+    kunde: "Wilder Kaiser",
     standort: "Gruttenhütte",
     seehoehe: 1640,
     lat: 47.55564,
@@ -55,32 +55,44 @@ const blick1 = {
 };
 
 //Marker wo Tabelle im objekt platziert wird + Popup
-let pin3 = L.marker(
-    [blick1.lat, blick1.lng]
-).addTo(karte);
-pin3.bindPopup(
-    `<h1>Standort ${blick1.standort}</h1>
-    <p>Höhe: ${blick1.seehoehe}</p>
-    <em>Kunde: ${blick1.kunde}</em>`
-    );
+//let pin3 = L.marker(
+//    [blick1.lat, blick1.lng]
+//).addTo(karte);
+//pin3.bindPopup(
+//    `<h1>Standort ${blick1.standort}</h1>
+//    <p>Höhe: ${blick1.seehoehe}</p>
+//    <em>Kunde: ${blick1.kunde}</em>`
+//);
 
 
-    const blick2 = { 
-        kunde: "Bergbahn Scheffau", 
-        standort: "Brandstadl",
-        seehoehe: 1640,
-        lat: 47.4912,
-        lng: 12.248,
-    };
+const blick2 = {
+    kunde: "Bergbahn Scheffau",
+    standort: "Brandstadl",
+    seehoehe: 1640,
+    lat: 47.4912,
+    lng: 12.248,
+};
 
+const blick3 = {
+    kunde: "Lechtal Tourismus",
+    standort: "Sonnalm Jöchelspitze",
+    seehoehe: 1786,
+    lat: 47.27528,
+    lng: 10.36505,
+};
 
-let pin4 = L.marker(
-        [blick2.lat, blick2.lng]
+const adlerblicke = [
+    blick1,
+    blick2,
+    blick3
+];
+for (let blick of adlerblicke) {
+    let blickpin = L.marker(
+        [blick.lat, blick.lng]
     ).addTo(karte);
-pin4.bindPopup(
-        `<h1>Standort ${blick2.standort}</h1>
-        <p>Höhe: ${blick2.seehoehe}</p>
-        <em>Kunde: ${blick2.kunde}</em>`
-        );
-
-        
+    blickpin.bindPopup(
+        `<h1>Standort ${blick.standort}</h1>
+        <p>Höhe: ${blick.seehoehe}</p>
+        <em>Kunde: ${blick.kunde}</em>`
+    )
+}
