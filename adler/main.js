@@ -9,23 +9,19 @@ const laenge2 = div.getAttribute("data-lng2");
 const titel2 = div.getAttribute("data-title2");
 
 // console.log(breite,laenge,titel);
-
 // alert(breite);
 // alert(laenge);
 // alert(titel);
-
-
 
 // Karte initialisieren
 let karte = L.map("map");
 //console.log(karte);
 
-
-// auf Ausschnitt zoomen
-karte.setView(
-    [47.2, 11.2],
-    8
-);
+// // auf Ausschnitt zoomen
+// karte.setView(
+//     [47.2, 11.2],
+//     8
+// );
 
 // Openstreetmap einbauen
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(karte);
@@ -44,7 +40,6 @@ let pin2 = L.marker(
 pin1.bindPopup(titel1).openPopup();
 pin2.bindPopup(titel2).openPopup();
 
-
 //Exceltabelle übernehmen
 
 //Marker wo Tabelle im objekt platziert wird + Popup
@@ -57,34 +52,13 @@ pin2.bindPopup(titel2).openPopup();
 //    <em>Kunde: ${blick1.kunde}</em>`
 //);
 
-const adlerblicke = [
-    {
-        kunde: "Wilder Kaiser",
-        standort: "Gruttenhütte",
-        seehoehe: 1640,
-        lat: 47.55564,
-        lng: 12.31861,
-    },
-    {
-        kunde: "Bergbahn Scheffau",
-        standort: "Brandstadl",
-        seehoehe: 1640,
-        lat: 47.4912,
-        lng: 12.248,
-    },
-    {
-        kunde: "Lechtal Tourismus",
-        standort: "Sonnalm Jöchelspitze",
-        seehoehe: 1786,
-        lat: 47.27528,
-        lng: 10.36505,
-    }
-];
-for (let blick of adlerblicke) {
+let blickeGruppe = L.featureGroup().addTo(karte);
+
+for (let blick of ADLERBLICKE) {
     console.log(blick);
     let blickpin = L.marker(
         [blick.lat, blick.lng]
-    ).addTo(karte);
+    ).addTo(blickeGruppe);
     blickpin.bindPopup(
         `<h1>Standort ${blick.standort}</h1>
         <p>Höhe: ${blick.seehoehe}</p>
@@ -92,3 +66,5 @@ for (let blick of adlerblicke) {
     )
 }
 
+console.log(blickeGruppe.getBounds());
+karte.fitBounds(blickeGruppe.getBounds());
