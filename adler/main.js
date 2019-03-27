@@ -23,8 +23,8 @@ let karte = L.map("map");
 
 // auf Ausschnitt zoomen
 karte.setView(
-    [breite1,laenge1],
-    12
+    [47.2, 11.2],
+    8
 );
 
 // Openstreetmap einbauen
@@ -43,3 +43,18 @@ let pin2 = L.marker(
 // Popup zum pin 1 und 2 hängen
 pin1.bindPopup(titel1).openPopup();
 pin2.bindPopup(titel2).openPopup();
+
+
+//Exceltabelle übernehmen
+const blick1 = { 
+    kunde: "Wilder Kaiser", 
+    standort: "Gruttenhütte",
+    seehoehe: 1640,
+    lat: 47.55564,
+    lng: 12.31861,
+};
+
+//Marker wo Tabelle im objekt platziert wird
+let pin3 = L.marker(
+    [blick1.lat, blick1.lng]
+).addTo(karte)
