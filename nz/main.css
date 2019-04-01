@@ -66,6 +66,14 @@ main figure img {
     border: 1px solid black;
 }
 
+main ul a {
+    color: black;
+}
+
+main p a {
+    color: grey;
+}
+
 .back {
     float: left;    
 }
