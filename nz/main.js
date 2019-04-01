@@ -20,7 +20,7 @@ let karte = L.map("map");
 
 // auf Ausschnitt zoomen
 karte.setView(
-    [breite,laenge],
+    [breite, laenge],
     13
 );
 
@@ -29,7 +29,7 @@ L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(karte);
 
 // Positionsmarker hinzufügen
 let pin = L.marker(
-    [breite,laenge]
+    [breite, laenge]
 ).addTo(karte);
 
 // Popup zum pin hängen
