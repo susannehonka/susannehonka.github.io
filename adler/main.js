@@ -67,4 +67,4 @@ for (let blick of ADLERBLICKE) {
 }
 
 console.log(blickeGruppe.getBounds());
-karte.fitBounds(blickeGruppe.getBounds(), pin1, pin2);
+karte.fitBounds(blickeGruppe.getBounds());
