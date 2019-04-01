@@ -18,7 +18,7 @@ header h2 {
 }
 
 header h3 {
-    font-size: 2em;
+    font-size: 3em;
     margin: 0;
 }
 
@@ -31,6 +31,7 @@ header h4 {
 }
 
 .author img {
+    border: 4px solid white;
     border-radius: 50%;
     margin-top: -50px;
 }
