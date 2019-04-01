@@ -36,6 +36,10 @@ header h4 {
     margin-top: -50px;
 }
 
+address {
+    color: grey;
+}
+
 address a {
     color: grey;
 }
