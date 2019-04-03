@@ -140,3 +140,10 @@ karte.addControl(new L.Control.Fullscreen());
 
 //wenn Kartenausschnitt verändert wird, bleibt neuer Ausschnitt nach aktualisieren vorhanden
 var hash = new L.Hash(karte);
+
+//Plugin Control coordinates initialisiert und an Karte gehängt, Durch Klick wegen Koordinaten augegeben
+var coords = new L.Control.Coordinates();
+coords.addTo(karte);
+karte.on('click', function(e) {
+	coords.setCoordinates(e);
+});
