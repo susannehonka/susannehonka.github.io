@@ -132,14 +132,19 @@ for (let blick of ADLERBLICKE) {
     )
 }
 
+//Pins zum Ausschnitt hinzufügen zum zoomen
+let ausschnitt = (blickeGruppe.getBounds());
+ausschnitt.extend(pin1.getLatLng());
+ausschnitt.extend(pin2.getLatLng());
+
 console.log(blickeGruppe.getBounds());
-karte.fitBounds(blickeGruppe.getBounds());
+karte.fitBounds(ausschnitt);
 
 //Icon für Vollbild erscheint
 karte.addControl(new L.Control.Fullscreen());
 
 //wenn Kartenausschnitt verändert wird, bleibt neuer Ausschnitt nach aktualisieren vorhanden
-var hash = new L.Hash(karte);
+//var hash = new L.Hash(karte);
 
 //Plugin Control coordinates initialisiert und an Karte gehängt, Durch Klick wegen Koordinaten augegeben
 var coords = new L.Control.Coordinates();
