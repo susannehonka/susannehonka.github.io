@@ -74,7 +74,7 @@ const kartenLayer = {
 // ).addTo(karte);
 
 //kartenLayer.osm.addTo(karte);
-kartenLayer.bmaporthofoto30cm.addTo(karte);
+kartenLayer.bmapoberflaeche.addTo(karte);
 
 //Auswahlmenü hinzufügen
 L.control.layers({
@@ -134,3 +134,7 @@ for (let blick of ADLERBLICKE) {
 
 console.log(blickeGruppe.getBounds());
 karte.fitBounds(blickeGruppe.getBounds());
+
+karte.addControl(new L.Control.Fullscreen());
+
+var hash = new L.Hash(karte);
