@@ -135,6 +135,8 @@ for (let blick of ADLERBLICKE) {
 console.log(blickeGruppe.getBounds());
 karte.fitBounds(blickeGruppe.getBounds());
 
+//Icon für Vollbild erscheint
 karte.addControl(new L.Control.Fullscreen());
 
+//wenn Kartenausschnitt verändert wird, bleibt neuer Ausschnitt nach aktualisieren vorhanden
 var hash = new L.Hash(karte);
