@@ -34,3 +34,13 @@ let pin = L.marker(
 
 // Popup zum pin hängen
 pin.bindPopup(titel).openPopup();
+
+//Icon für Vollbild erscheint
+karte.addControl(new L.Control.Fullscreen());
+
+//Plugin Control coordinates initialisiert und an Karte gehängt, Durch Klick wegen Koordinaten augegeben
+var coords = new L.Control.Coordinates();
+coords.addTo(karte);
+karte.on('click', function(e) {
+	coords.setCoordinates(e);
+});
