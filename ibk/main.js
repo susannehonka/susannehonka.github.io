@@ -86,7 +86,7 @@ karte.on("locationfound", function(event){
         event.latitude, event.longitude
     ]).addTo(karte);
     L.circle([
-        event.latitude, event.longitude], {radius : event.accuracy
+        event.latitude, event.longitude], {radius : (event.accuracy/2)
         }).addTo(karte);
 });
 
