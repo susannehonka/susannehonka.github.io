@@ -75,4 +75,19 @@ L.control.layers({
     "Stamen Watercolor": kartenLayer.stamen_watercolor
 }).addTo(karte);
 
-console.log(SPORTSTAETTEN);
+//console.log(SPORTSTAETTEN);
+
+for (let staette of SPORTSTAETTEN) {
+    console.log(staette);
+    // L.marker([staette.lat, staette.lng]
+    // ).addTo(karte);
+    let staettepin = L.marker([staette.lat, staette.lng]).addTo(karte);
+    staettepin.bindPopup(
+        `<h2>Name: ${staette.name}</h2>
+        <p>Adresse: ${staette.adresse}</p>
+        <p>Typ: ${staette.typ}</p>
+        <p>Gruppe: ${staette.gruppe}</p>`
+    )
+};
+
+
