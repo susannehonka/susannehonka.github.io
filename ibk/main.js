@@ -84,7 +84,7 @@ for (let staette of SPORTSTAETTEN) {
     //Piktogramm definieren
     let piktogramm = L.icon ({
         iconUrl : `icons/icon_${staette.icon}_schwarz_auf_weiss_250px.png`,
-        iconSize : [20,20]
+        iconSize : [25,25]
     });
 
     //Marker zeichnen
