@@ -74,3 +74,5 @@ L.control.layers({
     "Stamen Terrain": kartenLayer.stamen_terrain,
     "Stamen Watercolor": kartenLayer.stamen_watercolor
 }).addTo(karte);
+
+console.log(SPORTSTAETTEN);
