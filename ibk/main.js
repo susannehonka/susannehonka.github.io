@@ -6,10 +6,10 @@ const titel = div.getAttribute("data-title");
 // Karte initialisieren
 let karte = L.map("map");
 
-karte.setView(
-    [breite, laenge],
-    11
-);
+// karte.setView(
+//     [breite, laenge],
+//     11
+// );
 
 const kartenLayer = {
     osm : L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
@@ -58,7 +58,7 @@ const kartenLayer = {
     })
 };
 
-kartenLayer.bmapgelaende.addTo(karte);
+kartenLayer.osm.addTo(karte);
 
 //Auswahlmenü hinzufügen
 L.control.layers({
@@ -74,3 +74,19 @@ L.control.layers({
     "Stamen Terrain" : kartenLayer.stamen_terrain,
     "Stamen Watercolor" : kartenLayer.stamen_watercolor
 }).addTo(karte);
+
+karte.locate({
+    setView : true,
+    maxZoom : 18,
+});
+
+karte.on("locationfound", function(event){
+    console.log(event);
+    L.marker([
+        event.latitude, event.longitude
+    ]).addTo(karte);
+    L.circle([
+        event.latitude, event.longitude], {radius : event.accuracy
+        }).addTo(karte);
+});
+
