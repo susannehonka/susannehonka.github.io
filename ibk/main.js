@@ -81,13 +81,21 @@ for (let staette of SPORTSTAETTEN) {
     console.log(staette);
     // L.marker([staette.lat, staette.lng]
     // ).addTo(karte);
-    let staettepin = L.marker([staette.lat, staette.lng]).addTo(karte);
+    //Piktogramm definieren
+    let piktogramm = L.icon ({
+        iconUrl : `icons/icon_${staette.icon}_schwarz_auf_weiß_250px.png`
+    });
+
+    //Marker zeichnen
+    let staettepin = L.marker([staette.lat, staette.lng], {
+        icon : piktogramm
+    }).addTo(karte);
+
+    //Popup hinzufügen
     staettepin.bindPopup(
-        `<h2>Name: ${staette.name}</h2>
+        `<h2>${staette.name}</h2>
         <p>Adresse: ${staette.adresse}</p>
         <p>Typ: ${staette.typ}</p>
         <p>Gruppe: ${staette.gruppe}</p>`
     )
 };
-
-
