@@ -78,12 +78,13 @@ L.control.layers({
 //console.log(SPORTSTAETTEN);
 
 for (let staette of SPORTSTAETTEN) {
-    console.log(staette);
+    //console.log(staette);
     // L.marker([staette.lat, staette.lng]
     // ).addTo(karte);
     //Piktogramm definieren
     let piktogramm = L.icon ({
-        iconUrl : `icons/icon_${staette.icon}_schwarz_auf_weiß_250px.png`
+        iconUrl : `icons/icon_${staette.icon}_schwarz_auf_weiss_250px.png`,
+        iconSize : [20,20]
     });
 
     //Marker zeichnen
@@ -98,4 +99,4 @@ for (let staette of SPORTSTAETTEN) {
         <p>Typ: ${staette.typ}</p>
         <p>Gruppe: ${staette.gruppe}</p>`
     )
-};
+}
