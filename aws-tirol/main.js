@@ -77,3 +77,20 @@ karte.setView(
     15
 );
 
+//ausgabe in Konsole
+//console.log(AWS);
+//feature Guppe erstellt
+const awsTirol = L.featureGroup();
+L.geoJson(AWS)
+//bindPopup kann direkt Text sein oder eine Funktion um bestimmte Sachen anzuzeigen, Layer zeigt alles an
+    .bindPopup(function(layer) {
+        console.log("Layer: ", layer);
+        //in return angeben was man als ausgabe in popup haben will, in der klammer ist der pfad bis zum erwünschten wert
+        return `Temperatur: ${layer.feature.properties.LT} °C <br>
+        Datum: ${layer.feature.properties.date}`;
+    })
+    .addTo(awsTirol);
+awsTirol.addTo(karte);
+//Zoomt auf alle Punkte im ogd.geojson
+karte.fitBounds(awsTirol.getBounds());
+
