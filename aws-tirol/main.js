@@ -116,7 +116,7 @@ async function loadStations() {
     //Windrichtungen anzeigen
     const windLayer = L.featureGroup();
     L.geoJson(stations, {
-        pointToLayer: function(feature, latlng) {
+        pointToLayer: function (feature, latlng) {
             if (feature.properties.WR) {
                 let color = 'black';
                 if (feature.properties.WG > 20) {
@@ -143,17 +143,18 @@ async function loadStations() {
     ];
 
     L.geoJson(stations, {
-        pointToLayer: function(feature, latlng) {
-            let color = 'red'
-            for (let i=0; i<farbPalette.length; i++) {
-                console.log(farbPalette[i], feature.properties.LT);
-                if(feature.properties.LT < farbPalette[i][0]) {
-                    color = farbPalette[i][1];
-                    break;
+        pointToLayer: function (feature, latlng) {
+            if (feature.properties.LT) {
+                let color = 'red'
+                for (let i = 0; i < farbPalette.length; i++) {
+                    console.log(farbPalette[i], feature.properties.LT);
+                    if (feature.properties.LT < farbPalette[i][0]) {
+                        color = farbPalette[i][1];
+                        break;
+                    }
                 }
-            }
-            //if (feature.properties.LT) {
-              //  let color = 'blue';
+                //if (feature.properties.LT) {
+                //  let color = 'blue';
                 //if (feature.properties.LT > 0) {
                 //    color = 'red';
                 //}
@@ -164,7 +165,7 @@ async function loadStations() {
                 });
             }
         }
-    ).addTo(temperaturLayer);
+    }).addTo(temperaturLayer);
     layerControl.addOverlay(temperaturLayer, "Temperatur");
     temperaturLayer.addTo(karte);
 }
