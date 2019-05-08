@@ -54,10 +54,10 @@ const kartenLayer = {
     })
 };
 
-kartenLayer.osm.addTo(karte);
+kartenLayer.geolandbasemap.addTo(karte);
 
 //Auswahlmenü hinzufügen
-L.control.layers({
+const layerControl = L.control.layers({
     "Geoland Basemap": kartenLayer.geolandbasemap,
     "Geoland Overlay": kartenLayer.bmapoverlay,
     "Geoland Basemap Grau": kartenLayer.bmapgrau,
@@ -79,18 +79,49 @@ karte.setView(
 
 //ausgabe in Konsole
 //console.log(AWS);
-//feature Guppe erstellt
-const awsTirol = L.featureGroup();
-L.geoJson(AWS)
-//bindPopup kann direkt Text sein oder eine Funktion um bestimmte Sachen anzuzeigen, Layer zeigt alles an
-    .bindPopup(function(layer) {
-        console.log("Layer: ", layer);
-        //in return angeben was man als ausgabe in popup haben will, in der klammer ist der pfad bis zum erwünschten wert
-        return `Temperatur: ${layer.feature.properties.LT} °C <br>
-        Datum: ${layer.feature.properties.date}`;
-    })
-    .addTo(awsTirol);
-awsTirol.addTo(karte);
-//Zoomt auf alle Punkte im ogd.geojson
-karte.fitBounds(awsTirol.getBounds());
 
+//aktuelle Stationsdaten werden geladen, vom Server
+async function loadStations() {
+    //function für zugriff auf daten
+    const response = await fetch("https://aws.openweb.cc/stations");
+    //programm sagen das mit geojson gearbeitet wird, daten umwandeln
+    const stations = await response.json();
+    //feature Guppe erstellt
+    const awsTirol = L.featureGroup();
+    L.geoJson(stations)
+        //bindPopup kann direkt Text sein oder eine Funktion um bestimmte Sachen anzuzeigen, Layer zeigt alles an
+        .bindPopup(function (layer) {
+            //console.log("Layer: ", layer);
+            const date = new Date(layer.feature.properties.date);
+            console.log("Datum: ", date);
+            //in return angeben was man als ausgabe in popup haben will, in der klammer ist der pfad bis zum erwünschten wert
+            return `<h4>${layer.feature.properties.name}</h4>
+            Höhe: ${layer.feature.geometry.coordinates[2]} m <br>
+            Temperatur: ${layer.feature.properties.LT} °C <br>
+            Datum: ${date.toLocaleDateString("de-AT")}
+            ${date.toLocaleTimeString("de-AT")} <br>
+            Windgeschwindigkeit: ${layer.feature.properties.WG ? layer.feature.properties.WG + 'km/h' : 'keine Daten'}
+            <hr>
+            <footer>Quelle: Land Tirol - <a href="https://data.tirol.gv.at">data.tirol.gv.at</a>
+            </footer>
+            `;
+            //if funktion mit ?, wenn vorhanden anzeigen, wenn nicht vorhanden, dann keine daten ausgeben; Zeichenkette mit +
+        })
+        .addTo(awsTirol);
+    awsTirol.addTo(karte);
+    //Zoomt auf alle Punkte im ogd.geojson
+    karte.fitBounds(awsTirol.getBounds());
+    layerControl.addOverlay(awsTirol, "Wetterstationen Tirol");
+    L.geoJson(stations, {
+        pointToLayer: function(feature, latlng) {
+            if (feature.properties.WR) {
+                return L.marker(latlng, {
+                    icon: L.divIcon({
+                        html: `<i style="transform: rotate(${feature.properties.WR}deg)" class="fas fa-arrow-circle-up fa-2x"></i>`
+                    })
+                });
+            }
+        }
+    }).addTo(karte);
+}
+loadStations();
