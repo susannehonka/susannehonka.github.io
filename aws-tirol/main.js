@@ -100,7 +100,8 @@ async function loadStations() {
             Temperatur: ${layer.feature.properties.LT} °C <br>
             Datum: ${date.toLocaleDateString("de-AT")}
             ${date.toLocaleTimeString("de-AT")} <br>
-            Windgeschwindigkeit: ${layer.feature.properties.WG ? layer.feature.properties.WG + 'km/h' : 'keine Daten'}
+            Windgeschwindigkeit: ${layer.feature.properties.WG ? layer.feature.properties.WG + 'km/h' : 'keine Daten'} <br>
+            Relative Feuchte: ${layer.feature.properties.RH ? layer.feature.properties.RH + '%' : 'keine Daten'}
             <hr>
             <footer>Quelle: Land Tirol - <a href="https://data.tirol.gv.at">data.tirol.gv.at</a>
             </footer>
@@ -113,14 +114,61 @@ async function loadStations() {
     karte.fitBounds(awsTirol.getBounds());
     layerControl.addOverlay(awsTirol, "Wetterstationen Tirol");
 
+    // //Windrichtungen anzeigen
+    // const windLayer = L.featureGroup();
+    // L.geoJson(stations, {
+    //     pointToLayer: function (feature, latlng) {
+    //         if (feature.properties.WR) {
+    //             let color = 'black';
+    //             if (feature.properties.WG > 20) {
+    //                 color = 'red';
+    //             }
+    //             return L.marker(latlng, {
+    //                 icon: L.divIcon({
+    //                     html: `<i style="color: ${color}; transform: rotate(${feature.properties.WR}deg)" class="fas fa-arrow-circle-up fa-2x"></i>`
+    //                 })
+    //             });
+    //         }
+    //     }
+    // }).addTo(windLayer);
+    // layerControl.addOverlay(windLayer, "Windrichtung");
+    // //windLayer.addTo(karte);
+
     //Windrichtungen anzeigen
     const windLayer = L.featureGroup();
     L.geoJson(stations, {
         pointToLayer: function (feature, latlng) {
             if (feature.properties.WR) {
                 let color = 'black';
-                if (feature.properties.WG > 20) {
-                    color = 'red';
+                if (feature.properties.WG < 19) {
+                    color = '#00b900';
+                }
+                if (feature.properties.WG = 19 - 28) {
+                    color = '#10cd24';
+                }
+                if (feature.properties.WG = 29 - 38) {
+                    color = '#72d475';
+                }
+                if (feature.properties.WG = 39 - 49) {
+                    color = '#fed6d3';
+                }
+                if (feature.properties.WG = 50 - 61) {
+                    color = '#ffb6b3';
+                }
+                if (feature.properties.WG = 62 - 74) {
+                    color = '#ff9e9a';
+                }
+                if (feature.properties.WG = 75 - 88) {
+                    color = '#ff8281';
+                }
+                if (feature.properties.WG = 89 - 102) {
+                    color = '#ff6160';
+                }
+                if (feature.properties.WG = 103 - 117) {
+                    color = '#ff453c';
+                }
+                if (feature.properties.WG > 118) {
+                    color = '#ff200e';
                 }
                 return L.marker(latlng, {
                     icon: L.divIcon({
@@ -133,14 +181,79 @@ async function loadStations() {
     layerControl.addOverlay(windLayer, "Windrichtung");
     //windLayer.addTo(karte);
 
+    // //Windgeschwindigkeitslayer hinzufügen
+    // const windfarbeLayer = L.featureGroup();
+    // const windfarbPalette = [
+    //     [19, "#00b900"],
+    //     [28, "#10cd24"],
+    //     [38, "#72d475"],
+    //     [49, "#fed6d3"],
+    //     [61, "#ffb6b3"],
+    //     [74, "#ff9e9a"],
+    //     [88, "#ff8281"],
+    //     [102, "#ff6160"],
+    //     [117, "#ff453c"],
+    //     [500, "#ff200e"],
+    // ];
+
+
+    //Feuchtelayer hinzufügen
+    const feuchtelayer = L.featureGroup();
+    const feuchtefarbPalette = [
+        [30, "#EEE"],
+        [40, "#DDD"],
+        [50, "#C6C9CE"],
+        [60, "#BBB"],
+        [70, "#AAC"],
+        [80, "#9998DD"],
+        [90, "#8788EE"],
+        [100, "#7677E1"],
+    ];
+
     //Temperaturlayer hinzufügen
     const temperaturLayer = L.featureGroup();
     const farbPalette = [
-        [0, "blue"],
-        [1, "yellow"],
-        [5, "orange"],
-        [10, "red"],
+        [-28, "#646664"],
+        [-26, "#8c8a8c"],
+        [-24, "#b4b2b4"],
+        [-22, "#cccecc"],
+        [-20, "#e4e6e4"],
+        [-18, "#772d76"],
+        [-16, "#b123b0"],
+        [-14, "#d219d1"],
+        [-12, "#f0f"],
+        [-10, "#ff94ff"],
+        [-8, "#3800d1"],
+        [-6, "#325afe"],
+        [-4, "#2695ff"],
+        [-2, "#00cdff"],
+        [0, "#00fffe"],
+        [2, "#007800"],
+        [4, "#009d00;"],
+        [6, "#00bc02"],
+        [8, "#00e200"],
+        [10, "#0f0"],
+        [12, "#fcff00"],
+        [14, "#fdf200"],
+        [16, "#fde100;"],
+        [18, "#ffd100"],
+        [20, "#ffbd00"],
+        [22, "#ffad00"],
+        [24, "#ff9c00"],
+        [26, "#ff7800"],
+        [28, "red"],
+        [30, "#f30102"],
+        [32, "#d20000"],
+        [34, "#c10000"],
+        [36, "#b10000"],
+        [38, "#a10000"],
+        [40, "#900000"],
+        [42, "#770100"],
+        [44, "#5f0100"],
+        [46, "#460101"],
+        [48, "#2e0203"],
     ];
+
 
     L.geoJson(stations, {
         pointToLayer: function (feature, latlng) {
