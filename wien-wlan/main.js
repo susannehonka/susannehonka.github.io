@@ -67,6 +67,69 @@ kartenLayer.bmapgrau.addTo(karte);
 
 karte.addControl(new L.Control.Fullscreen());
 
+//Wikipediaartikel laden
+
+//http://api.geonames.org/wikipediaBoundingBoxJSON?formatted=true&north=44.1&south=-9.9&east=-22.4&west=55.2&username=webmapping&style=full
+
+//neue funktion selbst definieren
+
+const wikipediaGruppe = L.featureGroup().addTo(karte);
+layerControl.addOverlay(wikipediaGruppe, "Wikipedia Artikel");
+
+async function wikipediaArtikelLaden(url) {
+    wikipediaGruppe.clearLayers();
+
+    console.log("Lade", url);
+
+    const antwort = await fetch(url);
+    const jsonDaten = await antwort.json();
+
+    console.log(jsonDaten);
+    for (let artikel of jsonDaten.geonames) {
+        const wikipediaMarker = L.marker([artikel.lat, artikel.lng], {
+            icon : L.icon({
+                iconUrl : "icons/wikipedia_icon.png",
+                iconSize : [22,22]
+            })
+        }).addTo(wikipediaGruppe);
+
+        //Popup hinzufügen
+        wikipediaMarker.bindPopup(
+            `<h2>${artikel.title}</h2>
+            <p>${artikel.summary}</p>
+            <hr>
+            <footer><a target="_blank" href="https://${artikel.wikipediaUrl}">Weblink</a></footer>
+            `
+        );
+    }
+}
+
+//
+let letzteGeonamesUrl = null;
+
+
+karte.on("load zoomend moveend", function () {
+    console.log("karte geladen", karte.getBounds());
+
+    let ausschnitt = {
+        n: karte.getBounds().getNorth(),
+        s: karte.getBounds().getSouth(),
+        o: karte.getBounds().getEast(),
+        w: karte.getBounds().getWest(),
+    }
+    console.log(ausschnitt);
+
+    const geonamesUrl = `http://api.geonames.org/wikipediaBoundingBoxJSON?formatted=true&north=${ausschnitt.n}&south=${ausschnitt.s}&east=${ausschnitt.o}&west=${ausschnitt.w}&username=webmapping&style=full&maxRows=50&lang=de`;
+    //console.log(geonamesUrl);
+
+    if (geonamesUrl != letzteGeonamesUrl) {
+        //JSON-Artikel laden
+        wikipediaArtikelLaden(geonamesUrl);
+        letzteGeonamesUrl = geonamesUrl;
+    }
+
+});
+
 karte.setView([48.208333, 16.373056], 12);
 
 // https://github.com/Norkart/Leaflet-MiniMap
@@ -133,54 +196,3 @@ karte.addControl(scale);
 
 loadWifi(wifi);
 
-//Wikipediaartikel laden
-
-//http://api.geonames.org/wikipediaBoundingBoxJSON?formatted=true&north=44.1&south=-9.9&east=-22.4&west=55.2&username=webmapping&style=full
-
-//neue funktion selbst definieren
-async function wikipediaArtikelLaden(url) {
-    console.log("Lade", url);
-
-    const antwort = await fetch(url);
-    const jsonDaten = await antwort.json();
-
-    console.log(jsonDaten);
-    for (let artikel of jsonDaten.geonames) {
-        const wikipediaMarker = L.marker([artikel.lat, artikel.lng], {
-            icon : L.icon({
-                iconUrl : "icons/wikipedia_icon.png",
-                iconSize : [22,22]
-            })
-        }).addTo(karte);
-
-        //Popup hinzufügen
-        wikipediaMarker.bindPopup(
-            `<h2>${artikel.title}</h2>
-            <p>${artikel.summary}</p>
-            <hr>
-            <footer><a target="_blank" href="https://${artikel.wikipediaUrl}">Weblink</a></footer>
-            `
-        );
-    }
-}
-
-//
-karte.on("click", function () {
-    console.log("karte geladen", karte.getBounds());
-
-    let ausschnitt = {
-        n: karte.getBounds().getNorth(),
-        s: karte.getBounds().getSouth(),
-        o: karte.getBounds().getEast(),
-        w: karte.getBounds().getWest(),
-    }
-    console.log(ausschnitt);
-
-    const geonamesUrl = `http://api.geonames.org/wikipediaBoundingBoxJSON?formatted=true&north=${ausschnitt.n}&south=${ausschnitt.s}&east=${ausschnitt.o}&west=${ausschnitt.w}&username=webmapping&style=full&maxRows=5`;
-    //console.log(geonamesUrl);
-
-    //JSON-Artikel laden
-    wikipediaArtikelLaden(geonamesUrl);
-
-
-});
