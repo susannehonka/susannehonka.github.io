@@ -152,3 +152,8 @@ coords.addTo(karte);
 karte.on('click', function(e) {
 	coords.setCoordinates(e);
 });
+
+//gpx track laden
+new L.GPX("AdlerwegEtappeO4.gpx", {async: true}).on('loaded', function(e) {
+    karte.fitBounds(e.target.getBounds());
+  }).addTo(karte);
