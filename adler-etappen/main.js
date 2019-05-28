@@ -162,6 +162,7 @@ karte.on("click", function(ev) {
     console.log("Clicked: ", ev.latlng);
     if (!start) {
         start = ev.latlng;
+        alert("Startpunkt gesetzt, bitte 2. Punkt für Routenberechnung setzen.");
     } else {
         end = ev.latlng;
         routingMachine.setWaypoints([start, end]);
